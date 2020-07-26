@@ -1,8 +1,8 @@
 #!/bin/bash
 
 yum -y install expect
-MYSQL_ROOT_PASSWORD=openssl rand -base64  4
-echo "<?php echo $MYSQL_ROOT_PASSWORD; ?>" > MYSQL_ROOT_PASSWORD
+MYSQL_ROOT_PASSWORD = openssl rand -base64  4
+echo $MYSQL_ROOT_PASSWORD > MYSQL_ROOT_PASSWORD
 
 SECURE_MYSQL=$(expect -c "
 set timeout 3
