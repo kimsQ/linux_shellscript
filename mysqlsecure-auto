@@ -1,19 +1,17 @@
 #!/bin/bash
 
-# https://gist.github.com/Mins/4602864
-
-yum -y install expect
-
 # Not required in actual script
-MYSQL_ROOT_PASSWORD=
+MYSQL_ROOT_PASSWORD='password@123'
 
 SECURE_MYSQL=$(expect -c "
 set timeout 3
 spawn mysql_secure_installation
-expect \"Enter current password for root (enter for none):\"
-send \"$MYSQL\r\"
-expect \"Change the root password?\"
+expect \"Would you like to setup VALIDATE PASSWORD component?\"
 send \"n\r\"
+expect \"New password:\"
+send \"$MYSQL_ROOT_PASSWORD\r\"
+expect \"Re-enter new password:\"
+send \"$MYSQL_ROOT_PASSWORD\r\"
 expect \"Remove anonymous users?\"
 send \"y\r\"
 expect \"Disallow root login remotely?\"
