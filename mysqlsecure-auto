@@ -2,7 +2,7 @@
 
 yum -y install expect
 MYSQL_ROOT_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-echo $MYSQL_ROOT_PASSWORD > MYSQL_ROOT_PASSWOR
+echo $MYSQL_ROOT_PASSWORD > MYSQL_ROOT_PASSWORD
 
 SECURE_MYSQL=$(expect -c "
 set timeout 3
