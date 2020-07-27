@@ -5,12 +5,11 @@ TEXTDOMAIN=virtualhost
 ### Set default parameters
 action=$1
 domain=$2
-rootDir=$3
+userName=$3
 owner=$(who am i | awk '{print $1}')
-email='webmaster@localhost'
-sitesEnable='/etc/httpd/sites-enabled/'
-sitesAvailable='/etc/httpd/sites-available/'
-userDir='/var/www/'
+sitesEnable='/etc/httpd/conf.d/'
+sitesAvailable='/etc/httpd/conf.d/'
+userDir='/home/'
 sitesAvailabledomain=$sitesAvailable$domain.conf
 
 ### don't modify from here unless you know what you are doing ####
@@ -32,9 +31,12 @@ do
 	read domain
 done
 
-if [ "$rootDir" == "" ]; then
-	rootDir=${domain//./}
+if [ "$userName" == "" ]
+	then
+		echo $"Please provide userName"
+		exit 1;
 fi
+
 
 ### if root dir starts with '/', don't use /var/www as default starting point
 if [[ "$rootDir" =~ ^/ ]]; then
@@ -53,10 +55,7 @@ if [ "$action" == 'create' ]
 
 		### check if directory exists or not
 		if ! [ -d $rootDir ]; then
-			### create the directory
-			mkdir $rootDir
-			### give permission to root dir
-			chmod 755 $rootDir
+
 			### write test file in the new domain dir
 			if ! echo "<?php echo phpinfo(); ?>" > $rootDir/phpinfo.php
 			then
@@ -70,15 +69,16 @@ if [ "$action" == 'create' ]
 		### create virtual host rules file
 		if ! echo "
 		<VirtualHost *:80>
-			ServerAdmin $email
 			ServerName $domain
 			ServerAlias $domain
 			DocumentRoot $rootDir
+			RMode config
+			RUidGid $(whoami) apache
 			<Directory />
 				AllowOverride All
 			</Directory>
 			<Directory $rootDir>
-				Options Indexes FollowSymLinks MultiViews
+				Options MultiViews
 				AllowOverride all
 				Require all granted
 			</Directory>
@@ -112,7 +112,7 @@ if [ "$action" == 'create' ]
 		cp $sitesAvailabledomain $sitesEnable/$domain.conf
 
 		### restart Apache
-        systemctl restart httpd
+    service httpd restart
 
 		### show the finished message
 		echo -e $"Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $rootDir"
@@ -131,7 +131,7 @@ if [ "$action" == 'create' ]
 			rm -f $sitesEnable/$domain.conf
 
 			### restart Apache
-			systemctl restart httpd
+			service httpd restart
 
 			### Delete virtual host rules files
 			rm $sitesAvailabledomain
