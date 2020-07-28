@@ -62,7 +62,7 @@ if [ "$action" == 'create' ]
 		if ! echo "
 		<VirtualHost *:80>
 			ServerName $domain
-			ServerAlias $domain
+			ServerAlias www.$domain
 			DocumentRoot $rootDir
 			RMode config
 			RUidGid $owner apache
