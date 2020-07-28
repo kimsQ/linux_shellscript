@@ -5,11 +5,9 @@ TEXTDOMAIN=virtualhost
 ### Set default parameters
 action=$1
 domain=$2
-userName=$3
-owner=$(who am i | awk '{print $1}')
-sitesEnable='/etc/httpd/conf.d/'
+owner=$
 sitesAvailable='/etc/httpd/conf.d/'
-userDir='/home/'
+homeDir='/home/'
 sitesAvailabledomain=$sitesAvailable$domain.conf
 
 ### don't modify from here unless you know what you are doing ####
@@ -31,19 +29,13 @@ do
 	read domain
 done
 
-if [ "$userName" == "" ]
+if [ "$owner" == "" ] && [ "$action" == 'create' ]
 	then
-		echo $"Please provide userName"
+		echo $"Please provide owner"
 		exit 1;
 fi
 
-
-### if root dir starts with '/', don't use /var/www as default starting point
-if [[ "$rootDir" =~ ^/ ]]; then
-	userDir=''
-fi
-
-rootDir=$userDir$rootDir
+rootDir=$homeDir$owner/www
 
 if [ "$action" == 'create' ]
 	then
@@ -73,7 +65,7 @@ if [ "$action" == 'create' ]
 			ServerAlias $domain
 			DocumentRoot $rootDir
 			RMode config
-			RUidGid $(whoami) apache
+			RUidGid $owner apache
 			<Directory />
 				AllowOverride All
 			</Directory>
@@ -103,13 +95,10 @@ if [ "$action" == 'create' ]
 		fi
 
 		if [ "$owner" == "" ]; then
-			chown -R $(whoami):$(whoami) $rootDir
+			chown -R $user:$user $rootDir
 		else
 			chown -R $owner:$owner $rootDir
 		fi
-
-		### enable website
-		cp $sitesAvailabledomain $sitesEnable/$domain.conf
 
 		### restart Apache
     service httpd restart
@@ -127,30 +116,11 @@ if [ "$action" == 'create' ]
 			newhost=${domain//./\\.}
 			sed -i "/$newhost/d" /etc/hosts
 
-			### disable website
-			rm -f $sitesEnable/$domain.conf
-
 			### restart Apache
 			service httpd restart
 
 			### Delete virtual host rules files
 			rm $sitesAvailabledomain
-		fi
-
-		### check if directory exists or not
-		if [ -d $rootDir ]; then
-			echo -e $"Delete host root directory ? (y/n)"
-			read deldir
-
-			if [ "$deldir" == 'y' -o "$deldir" == 'Y' ]; then
-				### Delete the directory
-				rm -rf $rootDir
-				echo -e $"Directory deleted"
-			else
-				echo -e $"Host directory conserved"
-			fi
-		else
-			echo -e $"Host directory not found. Ignored"
 		fi
 
 		### show the finished message
