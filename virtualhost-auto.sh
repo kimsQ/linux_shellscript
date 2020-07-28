@@ -5,7 +5,7 @@ TEXTDOMAIN=virtualhost
 ### Set default parameters
 action=$1
 domain=$2
-owner=$
+owner=$3
 sitesAvailable='/etc/httpd/conf.d/'
 homeDir='/home/'
 sitesAvailabledomain=$sitesAvailable$domain.conf
