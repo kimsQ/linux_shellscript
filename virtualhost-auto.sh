@@ -117,12 +117,6 @@ if [ "$action" == 'create' ]
 			echo -e $"This domain does not exist.\nPlease try another one"
 			exit;
 		else
-			### Delete domain in /etc/hosts
-			newhost=${domain//./\\.}
-			sed -i "/$newhost/d" /etc/hosts
-
-			### restart Apache
-			service httpd restart
 
 			### Delete virtual host rules files
 			rm $sitesAvailabledomain
@@ -130,6 +124,9 @@ if [ "$action" == 'create' ]
 			if [ -e $sitesAvailableSSLdomain ]; then
 				rm $sitesAvailableSSLdomain
 			fi
+
+			### restart Apache
+			service httpd restart
 
 		fi
 
