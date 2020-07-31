@@ -9,6 +9,7 @@ owner=$3
 sitesAvailable='/etc/httpd/conf.d/'
 homeDir='/home/'
 sitesAvailabledomain=$sitesAvailable$domain.conf
+sitesAvailableSSLdomain=$sitesAvailable$domain-le-ssl.conf
 
 ### don't modify from here unless you know what you are doing ####
 
@@ -104,6 +105,7 @@ if [ "$action" == 'create' ]
 
 			### Delete virtual host rules files
 			rm $sitesAvailabledomain
+			rm $sitesAvailableSSLdomain
 		fi
 
 		### show the finished message
