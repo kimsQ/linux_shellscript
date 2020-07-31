@@ -105,7 +105,11 @@ if [ "$action" == 'create' ]
 
 			### Delete virtual host rules files
 			rm $sitesAvailabledomain
-			rm $sitesAvailableSSLdomain
+
+			if [ -e $sitesAvailableSSLdomain ]; then
+				rm $sitesAvailableSSLdomain
+			fi
+
 		fi
 
 		### show the finished message
