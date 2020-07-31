@@ -45,19 +45,6 @@ if [ "$action" == 'create' ]
 			exit;
 		fi
 
-		### check if directory exists or not
-		if ! [ -d $rootDir ]; then
-
-			### write test file in the new domain dir
-			if ! echo "<?php echo phpinfo(); ?>" > $rootDir/phpinfo.php
-			then
-				echo $"ERROR: Not able to write in file $rootDir/phpinfo.php. Please check permissions"
-				exit;
-			else
-				echo $"Added content to $rootDir/phpinfo.php"
-			fi
-		fi
-
 		### create virtual host rules file
 		if ! echo "
 		<VirtualHost *:80>
