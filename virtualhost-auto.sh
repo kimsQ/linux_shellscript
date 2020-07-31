@@ -74,6 +74,7 @@ if [ "$action" == 'create' ]
 		else
 			echo -e $"\nNew Virtual Host Created\n"
 		fi
+		;;
 
 		No )
 
@@ -98,6 +99,7 @@ if [ "$action" == 'create' ]
 		else
 			echo -e $"\nNew Virtual Host Created\n"
 		fi
+		;;
 
 		done
 
