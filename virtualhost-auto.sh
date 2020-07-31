@@ -50,57 +50,58 @@ if [ "$action" == 'create' ]
 		echo "Do you wish to add  www.$domain?"
 		select yn in "  " "No"; do
 		    case $yn in
-		Yes )
+					Yes )
 
-		### create virtual host rules file
-		if ! echo "
-		<VirtualHost *:80>
-			ServerName $domain
-			ServerAlias www.$domain
-			DocumentRoot $rootDir
-			RMode config
-			RUidGid $owner apache
-			<Directory $rootDir>
-			  AllowOverride All
-		    Require all granted
-			</Directory>
-			ErrorLog /var/log/httpd/$domain-error.log
-			LogLevel error
-			CustomLog /var/log/httpd/$domain-access.log combined
-		</VirtualHost>" > $sitesAvailabledomain
-		then
-			echo -e $"There is an ERROR creating $domain file"
-			exit;
-		else
-			echo -e $"\nNew Virtual Host Created\n"
-		fi
-		;;
+					### create virtual host rules file
+					if ! echo "
+					<VirtualHost *:80>
+						ServerName $domain
+						ServerAlias www.$domain
+						DocumentRoot $rootDir
+						RMode config
+						RUidGid $owner apache
+						<Directory $rootDir>
+						  AllowOverride All
+					    Require all granted
+						</Directory>
+						ErrorLog /var/log/httpd/$domain-error.log
+						LogLevel error
+						CustomLog /var/log/httpd/$domain-access.log combined
+					</VirtualHost>" > $sitesAvailabledomain
+					then
+						echo -e $"There is an ERROR creating $domain file"
+						exit;
+					else
+						echo -e $"\nNew Virtual Host Created\n"
+					fi
+					;;
 
-		No )
+					No )
 
-		### create virtual host rules file
-		if ! echo "
-		<VirtualHost *:80>
-			ServerName $domain
-			DocumentRoot $rootDir
-			RMode config
-			RUidGid $owner apache
-			<Directory $rootDir>
-			  AllowOverride All
-		    Require all granted
-			</Directory>
-			ErrorLog /var/log/httpd/$domain-error.log
-			LogLevel error
-			CustomLog /var/log/httpd/$domain-access.log combined
-		</VirtualHost>" > $sitesAvailabledomain
-		then
-			echo -e $"There is an ERROR creating $domain file"
-			exit;
-		else
-			echo -e $"\nNew Virtual Host Created\n"
-		fi
-		;;
+					### create virtual host rules file
+					if ! echo "
+					<VirtualHost *:80>
+						ServerName $domain
+						DocumentRoot $rootDir
+						RMode config
+						RUidGid $owner apache
+						<Directory $rootDir>
+						  AllowOverride All
+					    Require all granted
+						</Directory>
+						ErrorLog /var/log/httpd/$domain-error.log
+						LogLevel error
+						CustomLog /var/log/httpd/$domain-access.log combined
+					</VirtualHost>" > $sitesAvailabledomain
+					then
+						echo -e $"There is an ERROR creating $domain file"
+						exit;
+					else
+						echo -e $"\nNew Virtual Host Created\n"
+					fi
+					;;
 
+				esac
 		done
 
 
