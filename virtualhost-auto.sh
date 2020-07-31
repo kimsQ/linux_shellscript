@@ -66,6 +66,14 @@ if [ "$action" == 'create' ]
 			DocumentRoot $rootDir
 			RMode config
 			RUidGid $owner apache
+			<Directory />
+				AllowOverride All
+			</Directory>
+			<Directory $rootDir>
+				Options MultiViews
+				AllowOverride all
+				Require all granted
+			</Directory>
 			ErrorLog /var/log/httpd/$domain-error.log
 			LogLevel error
 			CustomLog /var/log/httpd/$domain-access.log combined
