@@ -46,13 +46,10 @@ if [ "$action" == 'create' ]
 			exit;
 		fi
 
-
 		echo "Do you wish to add  www.$domain?"
-		select yn in "  " "No"; do
+		select yn in "Yes" "No"; do
 		    case $yn in
 					Yes )
-
-					### create virtual host rules file
 					if ! echo "
 					<VirtualHost *:80>
 						ServerName $domain
@@ -77,8 +74,6 @@ if [ "$action" == 'create' ]
 					;;
 
 					No )
-
-					### create virtual host rules file
 					if ! echo "
 					<VirtualHost *:80>
 						ServerName $domain
