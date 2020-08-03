@@ -13,9 +13,15 @@ if [ $(id -u) -eq 0 ]; then
 		useradd -m -p $pass $username
 
 		DocumentRoot=/home/$username/www
+
 		mkdir $DocumentRoot
 		chmod 755 $DocumentRoot
 		chown -R $username:$username $DocumentRoot
+
+		cp -R /home/ec2-user/.ssh /home/$username
+		chown -R $username:$username /home/$username/.ssh
+		chmod 700 /home/$username/.ssh
+		chmod 600 /home/$username/.ssh/authorized_keys
 
 		[ $? -eq 0 ] && echo "User has been added to system!" || echo "Failed to add a user!"
 	fi
