@@ -15,7 +15,7 @@ chkconfig mysqld on
 #인스턴스 기본계정 권한부여
 usermod -a -G apache ec2-user
 chown -R ec2-user:apache /var/www
-yum install php72-mbstring.x86_64 -y
+yum install php73-mbstring.x86_64 -y
 
 # phpMyAdmin 설치
 cd /var/www/html
