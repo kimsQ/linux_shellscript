@@ -1,4 +1,7 @@
 #!/bin/bash
+
+ok() { echo -e '\e[32m'$1'\e[m'; } # Green
+
 ### Set Language
 TEXTDOMAIN=virtualhost
 
@@ -109,7 +112,7 @@ if [ "$action" == 'create' ]
     service httpd restart
 
 		### show the finished message
-		echo -e $"Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $rootDir"
+		ok "Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $rootDir"
 		exit;
 	else
 		### check whether domain already exists
@@ -131,6 +134,6 @@ if [ "$action" == 'create' ]
 		fi
 
 		### show the finished message
-		echo -e $"Complete!\nYou just removed Virtual Host $domain"
+		ok "Complete!\nYou just removed Virtual Host $domain"
 		exit 0;
 fi

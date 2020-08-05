@@ -85,9 +85,11 @@ chmod a+x certbot-auto
 
 # 관리용 쉘스크립트 다운로드
 wget -O adduser-auto https://raw.githubusercontent.com/kimsQ/linux_shellscript/master/adduser-auto.sh
+wget -O mysql-auto https://raw.githubusercontent.com/kimsQ/linux_shellscript/master/mysql-auto.sh
 wget -O virtualhost-auto https://raw.githubusercontent.com/kimsQ/linux_shellscript/master/virtualhost-auto.sh
 chmod +x virtualhost-auto
 chmod +x adduser-auto
+chmod +x mysql-auto
 
 #mysql 보안설정
 openssl rand -base64 10 > MYSQL_ROOT_PASSWORD

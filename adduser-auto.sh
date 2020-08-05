@@ -1,6 +1,8 @@
 #!/bin/bash
 # Script to add a user to Linux system
 
+ok() { echo -e '\e[32m'$1'\e[m'; } # Green
+
 if [ $(id -u) -eq 0 ]; then
 	read -p "Enter username : " username
 	read -s -p "Enter password : " password
@@ -23,7 +25,7 @@ if [ $(id -u) -eq 0 ]; then
 		chmod 700 /home/$username/.ssh
 		chmod 600 /home/$username/.ssh/authorized_keys
 
-		[ $? -eq 0 ] && echo "User has been added to system!" || echo "Failed to add a user!"
+		[ $? -eq 0 ] && ok "User has been added to system!" || echo "Failed to add a user!"
 	fi
 
 	echo "Do you wish to download rb2 files?"
@@ -35,7 +37,7 @@ if [ $(id -u) -eq 0 ]; then
 						git remote add origin https://github.com/kimsQ/rb2.git;
 						git pull origin master;
 						chown -R $username:$username .;
-						echo "Download is complete."
+						ok "Download is complete."
 						break;;
 	        No ) exit;;
 	    esac
