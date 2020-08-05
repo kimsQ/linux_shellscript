@@ -23,6 +23,12 @@ wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
 mkdir phpMyAdmin && tar -xvzf phpMyAdmin-latest-all-languages.tar.gz -C phpMyAdmin --strip-components 1
 chown -R ec2-user:ec2-user *
 rm phpMyAdmin-latest-all-languages.tar.gz
+cd /var/www/html/phpMyAdmin
+randomBlowfishSecret=$(openssl rand -base64 32)
+sed -e "s|cfg\['blowfish_secret'\] = ''|cfg['blowfish_secret'] = '$randomBlowfishSecret'|" config.sample.inc.php > config.inc.php
+mkdir /var/www/html/phpMyAdmin/tmp
+chgrp apache /var/www/html/phpMyAdmin/tmp
+chmod 774 /var/www/html/phpMyAdmin/tmp
 
 # git & expect 설치
 yum install -y git
