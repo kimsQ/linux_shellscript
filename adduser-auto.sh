@@ -37,7 +37,7 @@ if [ $(id -u) -eq 0 ]; then
 						git remote add origin https://github.com/kimsQ/rb2.git;
 						git pull origin master;
 						chown -R $username:$username .;
-						ok "Download is complete."
+						ok "Download is complete in $DocumentRoot"
 						break;;
 	        No ) exit;;
 	    esac
