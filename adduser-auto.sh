@@ -25,6 +25,22 @@ if [ $(id -u) -eq 0 ]; then
 
 		[ $? -eq 0 ] && echo "User has been added to system!" || echo "Failed to add a user!"
 	fi
+
+	echo "Do you wish to download rb2 files?"
+	select yn in "Yes" "No"; do
+	    case $yn in
+	        Yes )
+						cd /home/$username/www;
+						git init;
+						git remote add origin https://github.com/kimsQ/rb2.git;
+						git pull origin master;
+						chown -R $username:$username .;
+						echo "Download is complete."
+						break;;
+	        No ) exit;;
+	    esac
+	done
+
 else
 	echo "Only root may add a user to the system"
 	exit 2
