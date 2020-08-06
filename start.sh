@@ -63,11 +63,11 @@ ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 # PHP 설정
 echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
 sed -i 's/;date.timezone =/date.timezone = Asia\/Seoul/g' /etc/php.ini
-sed -i 's/^allow_url_fopen =.*$,allow_url_fopen = off/g' /etc/php.ini
-sed -i 's/^upload_max_filesize =.*$,upload_max_filesize = 20M/g' /etc/php.ini
-sed -i 's/^post_max_size =.*$,post_max_size = 20M/g' /etc/php.ini
-sed -i 's/^max_execution_time =.*$,max_execution_time = 30/g' /etc/php.ini
-sed -i 's/^max_file_uploads =.*$,max_file_uploads = 20/g'  /etc/php.ini
+sed -i 's,^allow_url_fopen =.*$,allow_url_fopen = off,g' /etc/php.ini
+sed -i 's,^upload_max_filesize =.*$,upload_max_filesize = 20M,g' /etc/php.ini
+sed -i 's,^post_max_size =.*$,post_max_size = 20M,g' /etc/php.ini
+sed -i 's,^max_execution_time =.*$,max_execution_time = 30,g' /etc/php.ini
+sed -i 's,^max_file_uploads =.*$,max_file_uploads = 20,g'  /etc/php.ini
 chown -R ec2-user:ec2-user /var/www/html/phpinfo.php
 
 # 웹서버 홈디렉토리 설정
