@@ -20,4 +20,4 @@ fi
 
 $MYSQL -uroot -p$MYSQL_ROOT_PASSWORD -e "$SQL"
 
-ok "Database $1 and user $2 created with a password $3"
+ok "Complete! Database $1 and user $2 created with a password $3"
